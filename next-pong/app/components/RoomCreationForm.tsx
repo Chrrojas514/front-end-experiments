@@ -1,44 +1,86 @@
 'use client'
-import { useState } from 'react'
+import { createContext, useState } from 'react';
 import React from 'react'
 
-interface GameState {
+type GameState = {
   roomName: string;
   roomId: string;
   playerA: string;
   playerB: string;
+  ballPositionX: number;
+  ballPositionY: number;
+  playerAPaddlePosition: number;
+  playerBPaddlePosition: number;
 }
 
-function RoomCreationForm() {
-  const [newRoomName, setNewRoomName] = useState(null)
+const DEFAULT_GAME_STATE: GameState = {
+  roomName: "",
+  roomId: "",
+  playerA: "",
+  playerB: "",
 
-  // const createRoom = (gameState: GameState) => {
-  //   const apiResponse = fetch('http://localhost:5000/createRoom', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(gameState)
-  //   })
-  // }
+  ballPositionX: 0,
+  ballPositionY: 0,
+
+  playerAPaddlePosition: 0,
+  playerBPaddlePosition: 0
+}
+
+const RoomCreationContext = createContext('default value')
+
+function RoomCreationForm() {
+  const [roomName, setRoomName] = useState<string>("")
+
+  const handleClick = async (roomName:string) => {
+    let newGameRoom: GameState = DEFAULT_GAME_STATE
+    newGameRoom.roomName = roomName
+    console.log(JSON.stringify(newGameRoom))
+    
+    const response = await fetch('http://localhost:5000/createRoom', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newGameRoom)
+    })
+
+    const data: GameState = await response.json()
+    console.log(data)
+  }
   
   return (
     <div className='join'>
-      <input className='input input-bordered join-item' placeholder='Create a room' />
-      <button className='btn btn-primary' onClick={() => {console.log('clicked!')}}>create room</button>
+      <input
+        className='input input-bordered join-item'
+        placeholder='Create a room'
+        value={roomName}
+        onInput={e => setRoomName(e.currentTarget.value)} />
+      <button className='btn btn-primary' onClick={async () => { await handleClick(roomName)} }>create room</button>
     </div>
   )
 }
 
-// function RoomCreationForm() {
-//   return (
-//     <form className='form from-primary join'>
-//       <label className='label la'>
-//         Create a room: <input className='border-solid border-black' type='text' name='name' />
-//       </label>
-//       <CreateRoomButton />
-//     </form>
-//   )
-// }
-
 export default RoomCreationForm
+
+
+// SAMPLE GAMESTATE JSON OBJECTS
+// {
+//   "roomName": "tesdsadtingd",
+//   "playerA": "",
+//   "playerB": "mePlayerB",
+//   "playerAPaddlePosX": 5,
+//   "playerAPaddlePosY": 5,
+//   "playerAPaddleSize": 5,
+//   "playerBPaddlePosX": 115,
+//   "playerBPaddlePosY": 5,
+//   "playerBPaddleSize": 5,
+//   "playerAScore": 0,
+//   "playerBScore": 0,
+//   "ballPositionX": 20,
+//   "ballPositionY": 20,
+//   "ballVelocityX": 2,
+//   "ballVelocityY": 2,
+//   "gameStarted": false,
+//   "gameOver": false
+// }
