@@ -26,6 +26,9 @@ const DEFAULT_GAME_STATE: GameState = {
   playerBPaddlePosition: 0
 }
 
+//use state for input, kind of like usequery where it has to be in root of app so
+//other files get the state update 
+
 function JoinRoomButton() {
   const router = useRouter()
 
@@ -33,6 +36,7 @@ function JoinRoomButton() {
     <div>
       <button 
       className='btn btn-secondary'
+      // @ts-expect-error
       onClick={() => document.getElementById('joinModal').showModal()}>
         join room
       </button>
