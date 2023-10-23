@@ -1,5 +1,6 @@
 'use client'
-import { createContext, useState } from 'react';
+import { createContext, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 type GameState = {
@@ -28,10 +29,26 @@ const DEFAULT_GAME_STATE: GameState = {
 
 const RoomCreationContext = createContext('default value')
 
+export async function getStaticProps() {
+  const res = await fetch('http://localhost:3000/gameStates')
+  const posts = await res.json()
+ 
+  return {
+    props: {
+      posts,
+    },
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+  }
+}
+
+
 function RoomCreationForm() {
   const [roomName, setRoomName] = useState<string>("")
 
-  const handleClick = async (roomName:string) => {
+  const router = useRouter()
+
+  const createRoom = async (roomName:string) => {
     let newGameRoom: GameState = DEFAULT_GAME_STATE
     newGameRoom.roomName = roomName
     console.log(JSON.stringify(newGameRoom))
@@ -47,6 +64,16 @@ function RoomCreationForm() {
 
     const data: GameState = await response.json()
     console.log(data)
+  }
+
+  const handleRefresh = () => {
+    router.refresh()
+  }
+
+  const handleClick = async (roomName:string) => {
+    await createRoom(roomName)
+    // handleRefresh()
+    setRoomName("")
   }
   
   return (
