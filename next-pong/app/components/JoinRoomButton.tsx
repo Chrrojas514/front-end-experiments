@@ -1,4 +1,3 @@
-'use client'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
@@ -29,11 +28,36 @@ const DEFAULT_GAME_STATE: GameState = {
 //use state for input, kind of like usequery where it has to be in root of app so
 //other files get the state update 
 
-function JoinRoomButton() {
+function JoinRoomButton({roomId}) {
+  const [playerName, setPlayerName] = useState<string>('')
   const router = useRouter()
 
+  const updateWithPlayerName = async (roomId:string) => {
+    const playerNameRequest = {
+      roomId: roomId,
+      playerName: playerName
+    }
+
+    const response = await fetch('http://localhost:5000/joinRoom', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(playerNameRequest)
+    })
+
+    console.log(roomId)
+  }
+
+  const handleClick = async (room:GameState) => {
+    await updateWithPlayerName(roomId)
+    setPlayerName("")
+    // router.push('/gameRooms/play')
+  }
+
   return (
-    <div>
+    <td>
       <button 
       className='btn btn-secondary'
       // @ts-expect-error
@@ -48,16 +72,18 @@ function JoinRoomButton() {
               className='input input-bordered'
               type='text'
               placeholder='Player name'
+              value={playerName}
+              onInput={e => setPlayerName(e.currentTarget.value)}
                />
             <button
               className="btn btn-secondary join-item"
-              onClick={() => router.push('/gameRooms/play')}>
+              onClick={async () => {handleClick(roomId)}}>
                 submit
             </button>
           </form>
         </div>
       </dialog>
-    </div>
+    </td>
   )
 }
 

@@ -1,0 +1,36 @@
+type GameState = {
+    roomName: string;
+    roomId: string;
+    playerA: string;
+    playerB: string;
+    ballPositionX: number;
+    ballPositionY: number;
+    playerAPaddlePosition: number;
+    playerBPaddlePosition: number;
+  }
+
+export async function getAllGameStateIDs () {
+  const response = await fetch('http://localhost:5000/gameStates')
+
+  const data:GameState[] = await response.json()
+  const listOfIDs = []
+
+  return data.map( (gameState: GameState) => {
+    return {
+      params: {
+        id: gameState.roomId
+      }
+    }
+  })
+}
+
+export async function getGameStateData (id:string) {
+  const response = await fetch(`http://localhost:5000/gameStates/${roomId}`)
+
+  const data:GameState = await response.json()
+
+  return {
+    id,
+    data
+  }
+}

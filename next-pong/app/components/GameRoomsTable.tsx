@@ -1,5 +1,4 @@
 import React from 'react'
-import { useQuery } from 'react-query'
 import JoinRoomButton from './JoinRoomButton'
 
 
@@ -14,14 +13,20 @@ type GameState = {
   playerBPaddlePosition: number;
 }
 
+const DEFAULT_GAME_STATE: GameState = {
+  roomName: "",
+  roomId: "",
+  playerA: "",
+  playerB: "",
 
-function GameRoomsTable() {
+  ballPositionX: 0,
+  ballPositionY: 0,
 
-  const gameStatesQuery = useQuery('gameStates', () =>
-    fetch('http://localhost:5000/gameStates').then(res =>
-      res.json()
-    )
-  )
+  playerAPaddlePosition: 0,
+  playerBPaddlePosition: 0
+}
+
+function GameRoomsTable({ gameRooms }) {
 
   return <>
     <table className='table table-bordered'>
@@ -33,12 +38,12 @@ function GameRoomsTable() {
         </tr>
       </thead>
       <tbody>
-        {gameStatesQuery.data?.map((gameState: GameState) => 
+        {gameRooms?.map((gameState: GameState) => 
         <tr key={gameState.roomId}> 
           <td>{gameState.roomName}</td>
           <td>{gameState.playerA}</td>
           <td>{gameState.playerB}</td>
-          <td><JoinRoomButton /></td>
+          <JoinRoomButton roomId={gameState.roomId} />
         </tr>)
         }
       </tbody>
