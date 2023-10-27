@@ -1,32 +1,11 @@
 import { useState } from 'react'
+import { useQueryClient } from 'react-query';
 import React from 'react'
-
-type GameState = {
-  roomName: string;
-  roomId: string;
-  playerA: string;
-  playerB: string;
-  ballPositionX: number;
-  ballPositionY: number;
-  playerAPaddlePosition: number;
-  playerBPaddlePosition: number;
-}
-
-const DEFAULT_GAME_STATE: GameState = {
-  roomName: "",
-  roomId: "",
-  playerA: "",
-  playerB: "",
-
-  ballPositionX: 0,
-  ballPositionY: 0,
-
-  playerAPaddlePosition: 0,
-  playerBPaddlePosition: 0
-}
+import { GameState, DEFAULT_GAME_STATE } from '../types';
 
 function RoomCreationForm() {
   const [roomName, setRoomName] = useState<string>("")
+  const queryClient = useQueryClient();
 
   const createRoom = async (roomName:string) => {
     let newGameRoom: GameState = DEFAULT_GAME_STATE
@@ -40,6 +19,11 @@ function RoomCreationForm() {
       },
       body: JSON.stringify(newGameRoom)
     })
+
+    await queryClient.invalidateQueries({
+      queryKey: 'gameStates',
+    });
+
 
     const data: GameState = await response.json()
     console.log(data)

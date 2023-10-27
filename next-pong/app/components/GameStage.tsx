@@ -1,5 +1,4 @@
 'use client'
-
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 
 type updatePaddleRequest = {
@@ -19,8 +18,13 @@ const BASE_PADDLE_STYLES: CSSProperties = {width: '12px', height: '120px', backg
 const MIN_PADDLE_POSITION = -3;
 const MAX_PADDLE_POSITION = 33;
 
-export default function GameStage({roomId, playerName}) {
-    // pass down roomId, playerName as prop, setGameState to fetched gamestate, call paddlePosUpdate on handleKeyDown
+interface GameStateProps {
+  roomId: string;
+  playerName: string;
+}
+
+export default function GameStage({roomId, playerName}: GameStateProps) {
+  // pass down roomId, playerName as prop, setGameState to fetched gamestate, call paddlePosUpdate on handleKeyDown
   const [paddle, setPaddle] = useState<updatePaddleRequest>(DEFAULT_UPDATE_REQUEST)
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -43,7 +47,7 @@ export default function GameStage({roomId, playerName}) {
       setPaddle(paddle)
       console.log('UP')
     }
-  }, [paddle])
+  }, [paddle, playerName, roomId])
 
   const sendUpdateRequest = async (paddleReq:updatePaddleRequest) => {
     const response = await fetch('http://localhost:5000/paddlePositionUpdate', {
@@ -66,7 +70,7 @@ export default function GameStage({roomId, playerName}) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     }
-  }, [handleKeyDown])
+  }, [handleKeyDown, paddle])
 
   return (
     <div

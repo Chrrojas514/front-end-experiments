@@ -1,19 +1,8 @@
 'use client'
-import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import RoomCreationForm from '../components/RoomCreationForm'
 import GameRoomsTable from '../components/GameRoomsTable'
 
-type GameState = {
-  roomName: string;
-  roomId: string;
-  playerA: string;
-  playerB: string;
-  ballPositionX: number;
-  ballPositionY: number;
-  playerAPaddlePosition: number;
-  playerBPaddlePosition: number;
-}
 
 const GameRoomPage = () => {
   const gameStatesQuery = useQuery('gameStates', () =>
