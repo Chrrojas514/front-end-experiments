@@ -1,6 +1,6 @@
 import React from 'react'
 import JoinRoomButton from './JoinRoomButton'
-import { GameState, DEFAULT_GAME_STATE } from '../types';
+import { GameState } from '../types';
 
 function GameRoomsTable({ gameRooms }:GameState[]) {
 

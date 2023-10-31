@@ -21,3 +21,15 @@ export const DEFAULT_GAME_STATE: GameState = {
     playerAPaddlePosition: 0,
     playerBPaddlePosition: 0
   }
+
+export type UpdatePaddleRequest = {
+    roomId: string,
+    playerName: string,
+    paddlePosition: number
+  }
+  
+export const DEFAULT_UPDATE_REQUEST: UpdatePaddleRequest = {
+    roomId: "",
+    playerName: "",
+    paddlePosition: 12
+  }

@@ -5,7 +5,7 @@ import { GameState, DEFAULT_GAME_STATE } from '../types';
 
 function RoomCreationForm() {
   const [roomName, setRoomName] = useState<string>("")
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const createRoom = async (roomName:string) => {
     let newGameRoom: GameState = DEFAULT_GAME_STATE
@@ -23,7 +23,6 @@ function RoomCreationForm() {
     await queryClient.invalidateQueries({
       queryKey: 'gameStates',
     });
-
 
     const data: GameState = await response.json()
     console.log(data)

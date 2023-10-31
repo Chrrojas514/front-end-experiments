@@ -1,16 +1,11 @@
 import { useRouter } from 'next/navigation'
 import React, { useRef, useState } from 'react'
-import { useQueryClient } from 'react-query'
-import { GameState, DEFAULT_GAME_STATE } from '../types'
-
-//use state for input, kind of like usequery where it has to be in root of app so
-//other files get the state update 
+import { GameState } from '../types'
 
 function JoinRoomButton({roomId}: GameState) {
   const [playerName, setPlayerName] = useState<string>('')
   const dialogRef = useRef(null)
   const router = useRouter()
-  const queryClient = useQueryClient();
       
 
   const updateWithPlayerName = async (roomId:string) => {
@@ -23,23 +18,19 @@ function JoinRoomButton({roomId}: GameState) {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(playerNameRequest)
     })
 
-    await queryClient.invalidateQueries({
-      queryKey: 'gameStates',
-    });
-
-    console.log(roomId)
+    const data = await response.json()
+    console.log(data)
   }
 
-  const handleClick = async (roomId:string) => {
+  const handleClick = async (roomId:string, playerName:string) => {
     await updateWithPlayerName(roomId)
+    router.push(`/gameRooms/play/${roomId}/${playerName}`)
     setPlayerName("")
-    router.push(`/gameRooms/play/${roomId}`)
-    console.log(roomId)
   }
 
   return (
@@ -63,7 +54,7 @@ function JoinRoomButton({roomId}: GameState) {
                />
             <button
               className="btn btn-secondary join-item"
-              onClick={async () => {handleClick(roomId)}}>
+              onClick={async () => {handleClick(roomId, playerName)}}>
                 submit
             </button>
           </form>

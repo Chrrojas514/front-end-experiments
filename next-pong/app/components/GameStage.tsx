@@ -1,56 +1,46 @@
 'use client'
-import { CSSProperties, useCallback, useEffect, useState } from 'react';
-
-type updatePaddleRequest = {
-  roomId: string,
-  playerName: string,
-  paddlePosition: number
-}
-
-const DEFAULT_UPDATE_REQUEST: updatePaddleRequest = {
-  roomId: "",
-  playerName: "",
-  paddlePosition: 12
-}
+import { CSSProperties, useCallback, useEffect, useState } from 'react'
+import { UpdatePaddleRequest, DEFAULT_UPDATE_REQUEST } from '../types'
 
 const BASE_PADDLE_STYLES: CSSProperties = {width: '12px', height: '120px', backgroundColor: 'white'}
 
-const MIN_PADDLE_POSITION = -3;
-const MAX_PADDLE_POSITION = 33;
+const MIN_PADDLE_POSITION = -3
+const MAX_PADDLE_POSITION = 33
 
 interface GameStateProps {
-  roomId: string;
-  playerName: string;
+  roomId: string,
+  playerName: string,
 }
 
 export default function GameStage({roomId, playerName}: GameStateProps) {
   // pass down roomId, playerName as prop, setGameState to fetched gamestate, call paddlePosUpdate on handleKeyDown
-  const [paddle, setPaddle] = useState<updatePaddleRequest>(DEFAULT_UPDATE_REQUEST)
+  const [paddle, setPaddle] = useState<UpdatePaddleRequest>(DEFAULT_UPDATE_REQUEST)
+  const newPaddle = paddle
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       const newPositon = Math.min(paddle.paddlePosition + 1, MAX_PADDLE_POSITION)
       
-      paddle.roomId = roomId
-      paddle.playerName = playerName
-      paddle.paddlePosition = newPositon
-      setPaddle(paddle)
+      newPaddle.roomId = roomId
+      newPaddle.playerName = playerName
+      newPaddle.paddlePosition = newPositon
+      setPaddle(newPaddle)
       console.log('DOWN!')
     }
     
     if (e.key === 'ArrowUp') {
       const newPositon = Math.max(paddle.paddlePosition - 1 , MIN_PADDLE_POSITION)
 
-      paddle.roomId = roomId
-      paddle.playerName = playerName
-      paddle.paddlePosition = newPositon
-      setPaddle(paddle)
+      newPaddle.roomId = roomId
+      newPaddle.playerName = playerName
+      newPaddle.paddlePosition = newPositon
+      setPaddle(newPaddle)
       console.log('UP')
     }
-  }, [paddle, playerName, roomId])
+  }, [ newPaddle, paddle, playerName, roomId])
 
-  const sendUpdateRequest = async (paddleReq:updatePaddleRequest) => {
-    const response = await fetch('http://localhost:5000/paddlePositionUpdate', {
+  const sendUpdateRequest = async (paddleReq:UpdatePaddleRequest) => {
+    const response = await fetch(`http://localhost:5000/gameStates/${roomId}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -59,7 +49,7 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
       body: JSON.stringify(paddleReq)
     })
 
-    const data:updatePaddleRequest = await response.json()
+    const data:UpdatePaddleRequest = await response.json()
     console.log(data)
   }
 

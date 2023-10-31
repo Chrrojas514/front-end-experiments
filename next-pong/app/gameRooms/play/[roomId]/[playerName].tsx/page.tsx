@@ -2,11 +2,13 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query';
 import GameStage from '@/app/components/GameStage';
-import { GameState, DEFAULT_GAME_STATE } from '../../../types';
-
+import { GameState, DEFAULT_GAME_STATE, UpdatePaddleRequest } from '../../../../types';
 
 interface pageProps {
-  params: { roomId: string }
+  params: { 
+    roomId: string,
+    playerName: string
+  }
 }
 
 const getGameRoom = async (roomId: string) => {
@@ -19,15 +21,15 @@ const getGameRoom = async (roomId: string) => {
   return response.json()
 }
 
-const updateGameRoom = async (roomId: string) => {
-  // USE MUTATION? LOOK INTO USE MUTATION FOR PUT METHODS
-  // wait do i even need this tho?
-  const response = await fetch(`http://localhost:5000/gameStates/${roomId}`)
+const getPlayer = async (gameState: GameState) => {
+
 }
 
 /*-------------------------------------------------------------------------------------------*/ 
-function GameRoom({params}) {
-  const gameStateQuery = useQuery<GameState>('gameStateById', () =>
+function GameRoom({params}: pageProps) {
+  const [gameState, setGameState] = useState<GameState>(DEFAULT_GAME_STATE)
+
+  const gameStateQuery = useQuery<GameState>('gameState', () =>
   fetch(`http://localhost:5000/gameStates/${params.roomId}`).then(res =>
     res.json())
     )
@@ -35,7 +37,7 @@ function GameRoom({params}) {
   return (
     <>
     <div>current room id: {params.roomId}</div>
-      <GameStage roomId={params.roomId} playerName={gameStateQuery.data?.playerNameA} />
+      <GameStage roomId={params.roomId} playerName={gameStateQuery.data?.playerA} />
     </>
   )
 }
