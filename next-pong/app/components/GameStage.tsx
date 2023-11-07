@@ -88,7 +88,7 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
   const isPlayerA = playerName === gameStateQuery.data.playerA;
 
   const playerKey = isPlayerA ? 'playerAPaddlePosition' : 'playerBPaddlePosition'
-  const oponentKey = isPlayerA ? 'playerBPaddlePosition' : 'playerAPaddlePosition'
+  const opponent = isPlayerA ? 'playerBPaddlePosition' : 'playerAPaddlePosition'
 
   return (
     <div
@@ -112,7 +112,7 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
         top: 225,
         left: 291,
       }}></div>
-      <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[oponentKey] * 10}}></div>
+      <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[opponent] * 10}}></div>
     </div>
   )
 }
