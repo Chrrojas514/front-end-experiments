@@ -22,10 +22,10 @@ function RoomCreationForm() {
 
     await queryClient.invalidateQueries({
       queryKey: 'gameStates',
-    });
+    })
 
-    const data: GameState = await response.json()
-    console.log(data)
+    // const data: GameState = await response.json()
+    // console.log(data)
   }
 
   const handleClick = async (roomName:string) => {

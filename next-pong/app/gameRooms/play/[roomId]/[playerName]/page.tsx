@@ -1,9 +1,11 @@
 'use client'
 import React, { useState } from 'react'
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import GameStage from '@/app/components/GameStage';
-import { GameState, DEFAULT_GAME_STATE, UpdatePaddleRequest } from '../../../../types';
+import { GameState, DEFAULT_GAME_STATE } from '../../../../types';
+import { useParams } from 'next/navigation';
 
+// needed?
 interface pageProps {
   params: { 
     roomId: string,
@@ -11,33 +13,24 @@ interface pageProps {
   }
 }
 
-const getGameRoom = async (roomId: string) => {
-  const response = await fetch(`http://localhost:5000/gameStates/${roomId}`)
-  
-  if (!response.ok) {
-    throw new Error('Failed to get data!')
-  }
-
-  return response.json()
-}
-
-const getPlayer = async (gameState: GameState) => {
-
-}
-
 /*-------------------------------------------------------------------------------------------*/ 
-function GameRoom({params}: pageProps) {
+function GameRoom() {
   const [gameState, setGameState] = useState<GameState>(DEFAULT_GAME_STATE)
+  const queryClient = useQueryClient()
+
+  const params = useParams()
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
   fetch(`http://localhost:5000/gameStates/${params.roomId}`).then(res =>
     res.json())
     )
 
+  console.log(params)
+
   return (
     <>
-    <div>current room id: {params.roomId}</div>
-      <GameStage roomId={params.roomId} playerName={gameStateQuery.data?.playerA} />
+      <div>current room id: {params.roomId} current player: {params.playerName}</div>
+      <GameStage roomId={params.roomId} playerName={params.playerName} />
     </>
   )
 }

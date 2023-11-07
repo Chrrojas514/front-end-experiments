@@ -23,8 +23,8 @@ function JoinRoomButton({roomId}: GameState) {
       body: JSON.stringify(playerNameRequest)
     })
 
-    const data = await response.json()
-    console.log(data)
+    // const data = await response.json()
+    // console.log(data)
   }
 
   const handleClick = async (roomId:string, playerName:string) => {
