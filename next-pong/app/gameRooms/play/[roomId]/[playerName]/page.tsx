@@ -1,9 +1,10 @@
 'use client'
-import React, { useState } from 'react'
-import { useQuery, useQueryClient } from 'react-query';
+import React, { useRef, useState } from 'react'
 import GameStage from '@/app/components/GameStage';
-import { GameState, DEFAULT_GAME_STATE } from '../../../../types';
 import { useParams } from 'next/navigation';
+import { useQuery } from 'react-query';
+import { GameState } from '@/app/types';
+import StartGameButton from '@/app/components/StartGameButton';
 
 // needed?
 interface pageProps {
@@ -15,17 +16,33 @@ interface pageProps {
 
 /*-------------------------------------------------------------------------------------------*/ 
 function GameRoom() {
-  const [gameState, setGameState] = useState<GameState>(DEFAULT_GAME_STATE)
-  const queryClient = useQueryClient()
-
   const params = useParams()
+  const startGameRef = useRef(null)
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
   fetch(`http://localhost:5000/gameStates/${params.roomId}`).then(res =>
-    res.json())
+    res.json()), {refetchInterval:200}
     )
+  
+  if (gameStateQuery.isLoading) {
+    return <div>Loading...</div>
+  }
 
-  console.log(params)
+  if (gameStateQuery.isError){
+    return <div>ERROR</div>
+  }
+
+  if (!gameStateQuery.data) {
+    return <div>MISSING DATA</div>
+  }
+
+  if (gameStateQuery.data.gameStarted === false) {
+    return (
+    <div>
+      <StartGameButton roomId={gameStateQuery.data?.roomId}/>
+    </div>
+    )
+  }
 
   return (
     <>

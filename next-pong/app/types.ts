@@ -7,6 +7,8 @@ export type GameState = {
   ballPositionY: number;
   playerAPaddlePosition: number;
   playerBPaddlePosition: number;
+  gameStarted: boolean,
+  gameOver: boolean,
 }
 
 export const DEFAULT_GAME_STATE: GameState = {
@@ -19,7 +21,10 @@ export const DEFAULT_GAME_STATE: GameState = {
     ballPositionY: 0,
   
     playerAPaddlePosition: 0,
-    playerBPaddlePosition: 0
+    playerBPaddlePosition: 0,
+
+    gameStarted: false,
+    gameOver: false,
   }
 
 export type UpdatePaddleRequest = {

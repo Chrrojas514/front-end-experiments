@@ -25,7 +25,7 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
     )
 
   const sendUpdateRequest = useCallback (async (paddleReq:UpdatePaddleRequest) => {
-    const response = await fetch(`http://localhost:5000/gameStates/${roomId}`, {
+    await fetch(`http://localhost:5000/gameStates/${roomId}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -37,9 +37,6 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
     await queryClient.invalidateQueries({
       queryKey: ['gameStates', roomId]
     })
-
-    const data:UpdatePaddleRequest = await response.json()
-    console.log(data)
   }, [queryClient, roomId])
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -50,7 +47,6 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
       newPaddle.playerName = playerName
       newPaddle.paddlePosition = newPositon
       setPaddle(newPaddle)
-      console.log(newPaddle)
     }
     
     if (e.key === 'ArrowUp') {
@@ -60,7 +56,6 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
       newPaddle.playerName = playerName
       newPaddle.paddlePosition = newPositon
       setPaddle(newPaddle)
-      console.log(newPaddle)
     }
     sendUpdateRequest(paddle)
   }, [newPaddle, paddle, playerName, roomId, sendUpdateRequest])
