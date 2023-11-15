@@ -27,7 +27,7 @@ function EndGameButton({roomId}:string) {
   return (
     <button 
       className='btn btn-secondary'
-      onClick={() => handleClick()}>
+      onClick={() => sendEndRequest()}>
         End Game
     </button>
   )

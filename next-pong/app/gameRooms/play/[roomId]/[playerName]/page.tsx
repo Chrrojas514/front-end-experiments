@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import { GameState } from '@/app/types';
 import StartGameScreen from '@/app/components/StartGameScreen';
 import EndGameButton from '@/app/components/EndGameButton';
+import DeleteRoomButton from '@/app/components/DeleteRoomButton';
 
 /*-------------------------------------------------------------------------------------------*/ 
 function GameRoom() {
@@ -28,7 +29,8 @@ function GameRoom() {
   if (!gameStateQuery.data || gameStateQuery.data.gameStarted === false) {
     return (
       <div>
-        <StartGameScreen roomId={params.roomId}/>
+        <StartGameScreen roomId={params.roomId} />
+        <DeleteRoomButton roomId={params.roomId} />
       </div>
       )
   }
