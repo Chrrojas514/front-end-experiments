@@ -31,7 +31,6 @@ function StartGameButton(roomId:string) {
       body: JSON.stringify(roomId)
     })
     const data = response.json()
-    console.log(JSON.stringify(roomId))
   }
 
   const handleClick = async () => {

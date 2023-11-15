@@ -48,7 +48,6 @@ function JoinRoomButton({roomId}: GameState) {
   const handleClick = async (roomId:string, playerName:string) => {
     await updateWithPlayerName(roomId)
     router.push(`/gameRooms/play/${roomId}/${playerName}`, )
-    console.log('roomId:'+ roomId,'playerName:' + playerName)
     //setPlayerName("")
   }
 

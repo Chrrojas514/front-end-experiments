@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useQuery } from 'react-query';
 import { GameState } from '@/app/types';
 import StartGameScreen from '@/app/components/StartGameScreen';
+import EndGameButton from '@/app/components/EndGameButton';
 
 /*-------------------------------------------------------------------------------------------*/ 
 function GameRoom() {
@@ -32,18 +33,11 @@ function GameRoom() {
       )
   }
 
-  // if (gameStateQuery.data.gameStarted === false) {
-  //   return (
-  //   <div>
-  //     <StartGameScreen roomId={gameStateQuery.data.roomId}/>
-  //   </div>
-  //   )
-  // }
-
   return (
     <>
       <div>current room id: {params.roomId} current player: {params.playerName}</div>
       <GameStage roomId={params.roomId} playerName={params.playerName} />
+      <EndGameButton roomId={params.roomId} />
     </>
   )
 }
