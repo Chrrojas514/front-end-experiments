@@ -104,10 +104,12 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
         width: '15px',
         height: '15px',
         backgroundColor: 'white',
-        top: 225,
-        left: 291,
+        top: gameStateQuery.data.ballPositionX,
+        left: gameStateQuery.data.ballPositionY,
       }}></div>
       <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[opponent] * 10}}></div>
     </div>
   )
 }
+
+// position values for keeping ball in center of stage: top 225, left 291

@@ -2,14 +2,27 @@
 import { useQuery } from 'react-query'
 import RoomCreationForm from '../components/RoomCreationForm'
 import GameRoomsTable from '../components/GameRoomsTable'
+import { GameState } from '../types'
 
 
 const GameRoomPage = () => {
-  const gameStatesQuery = useQuery('gameStates', () =>
+  const gameStatesQuery = useQuery<GameState[]>('gameStates', () =>
     fetch('http://localhost:5000/gameStates').then(res =>
       res.json()
     )
   )
+
+  if (gameStatesQuery.isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (gameStatesQuery.isError){
+    return <div>ERROR</div>
+  }
+
+  if (!gameStatesQuery.data) {
+    return <div>MISSING DATA</div>
+  }
 
   const data = gameStatesQuery.data
 

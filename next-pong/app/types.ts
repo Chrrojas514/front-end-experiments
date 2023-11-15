@@ -1,30 +1,35 @@
 export type GameState = {
-  roomName: string;
-  roomId: string;
-  playerA: string;
-  playerB: string;
-  ballPositionX: number;
-  ballPositionY: number;
-  playerAPaddlePosition: number;
-  playerBPaddlePosition: number;
+  roomName: string,
+  playerA: string,
+  playerB: string,
+  playerAPaddlePosition: number,
+  playerBPaddlePosition: number,
+  playerAScore: number,
+  playerBScore: number,
+  ballPositionX: number,
+  ballPositionY: number,
+  ballVelocityX: number,
+  ballVelocityY: number,
   gameStarted: boolean,
   gameOver: boolean,
+  roomId: string,
 }
 
+// @ts-ignore roomId is set by backend, request needs to NOT send a roomId
 export const DEFAULT_GAME_STATE: GameState = {
-    roomName: "",
-    roomId: "",
-    playerA: "",
-    playerB: "",
-  
-    ballPositionX: 0,
-    ballPositionY: 0,
-  
-    playerAPaddlePosition: 0,
-    playerBPaddlePosition: 0,
-
-    gameStarted: false,
-    gameOver: false,
+  roomName: "",
+  playerA: "",
+  playerB: "",
+  playerAPaddlePosition: 12,
+  playerBPaddlePosition: 12,
+  playerAScore: 0,
+  playerBScore: 0,
+  ballPositionX: 225,
+  ballPositionY: 291,
+  ballVelocityX: 0,
+  ballVelocityY: 0,
+  gameStarted: false,
+  gameOver: false,
   }
 
 export type UpdatePaddleRequest = {

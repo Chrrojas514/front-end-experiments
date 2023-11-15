@@ -11,7 +11,7 @@ function RoomCreationForm() {
     let newGameRoom: GameState = DEFAULT_GAME_STATE
     newGameRoom.roomName = roomName
     
-    const response = await fetch('http://localhost:5000/createRoom', {
+    await fetch('http://localhost:5000/createRoom', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -23,12 +23,13 @@ function RoomCreationForm() {
     await queryClient.invalidateQueries({
       queryKey: 'gameStates',
     })
-
-    // const data: GameState = await response.json()
-    // console.log(data)
   }
 
   const handleClick = async (roomName:string) => {
+    if (!roomName) {
+      return
+    }
+
     await createRoom(roomName)
     setRoomName("")
   }
@@ -50,21 +51,18 @@ export default RoomCreationForm
 
 // SAMPLE GAMESTATE JSON OBJECTS
 // {
-//   "roomName": "tesdsadtingd",
-//   "playerA": "",
-//   "playerB": "mePlayerB",
-//   "playerAPaddlePosX": 5,
-//   "playerAPaddlePosY": 5,
-//   "playerAPaddleSize": 5,
-//   "playerBPaddlePosX": 115,
-//   "playerBPaddlePosY": 5,
-//   "playerBPaddleSize": 5,
-//   "playerAScore": 0,
-//   "playerBScore": 0,
-//   "ballPositionX": 20,
-//   "ballPositionY": 20,
-//   "ballVelocityX": 2,
-//   "ballVelocityY": 2,
-//   "gameStarted": false,
-//   "gameOver": false
+// 	"roomName": "generating",
+// 	"playerA": "",
+// 	"playerB": "",
+// 	"playerAPaddlePosition": 0,
+// 	"playerBPaddlePosition": 0,
+// 	"playerAScore": 0,
+// 	"playerBScore": 0,
+// 	"ballPositionX": 20,
+// 	"ballPositionY": 20,
+// 	"ballVelocityX": 2,
+// 	"ballVelocityY": 2,
+// 	"gameStarted": false,
+// 	"gameOver": false,
+// 	"roomId": "5670b0ab39b64"
 // }

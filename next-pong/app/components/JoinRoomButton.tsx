@@ -1,12 +1,31 @@
+'use client'
 import { useRouter } from 'next/navigation'
-import React, { useRef, useState } from 'react'
+import { useQuery } from 'react-query'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { GameState } from '../types'
 
 function JoinRoomButton({roomId}: GameState) {
   const [playerName, setPlayerName] = useState<string>('')
+  const [isFull, setIsFull] = useState<boolean>(false)
   const dialogRef = useRef(null)
+  const joinRef = useRef(null)
   const router = useRouter()
-      
+  
+  const gameStateQuery = useQuery<GameState>('gameState', () =>
+    fetch(`http://localhost:5000/gameStates/${roomId}`).then(res => res.json())
+    )
+
+  if (gameStateQuery.isLoading) {
+    return <td>Loading...</td>
+  }
+
+  if (gameStateQuery.isError){
+    return <td>ERROR</td>
+  }
+
+  if (!gameStateQuery.data) {
+    return <td>MISSING DATA</td>
+  }
 
   const updateWithPlayerName = async (roomId:string) => {
     const playerNameRequest = {
@@ -14,7 +33,7 @@ function JoinRoomButton({roomId}: GameState) {
       playerName: playerName
     }
 
-    const response = await fetch('http://localhost:5000/joinRoom', {
+    await fetch('http://localhost:5000/joinRoom', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -23,24 +42,64 @@ function JoinRoomButton({roomId}: GameState) {
       body: JSON.stringify(playerNameRequest)
     })
 
-    // const data = await response.json()
-    // console.log(data)
+    roomIsFull()
   }
 
   const handleClick = async (roomId:string, playerName:string) => {
     await updateWithPlayerName(roomId)
-    router.push(`/gameRooms/play/${roomId}/${playerName}`)
-    setPlayerName("")
+    router.push(`/gameRooms/play/${roomId}/${playerName}`, )
+    console.log('roomId:'+ roomId,'playerName:' + playerName)
+    //setPlayerName("")
   }
+
+  const roomIsFull = () => {
+    if (gameStateQuery.data.playerA === ("") || gameStateQuery.data.playerB === ("")) {
+      setIsFull(false)
+    }
+    setIsFull(true)
+  }
+
+  if (isFull) {
+    return <td>
+      <button
+          ref={joinRef}
+          className='btn btn-secondary'
+          // @ts-expect-error
+          onClick={() => dialogRef.current?.showModal()}
+          disabled={true}>
+            join room
+        </button>
+    </td>
+  }
+
 
   return (
     <td>
-      <button 
+      {/*  */}
+      {/* <button
       className='btn btn-secondary'
       // @ts-expect-error
-      onClick={() => dialogRef.current?.showModal()}>
+      onClick={() => dialogRef.current?.showModal()}
+      disabled={isFull}>
         join room
-      </button>
+      </button> */}
+      {!isFull
+        ? <button
+            ref={joinRef}
+            className='btn btn-secondary'
+            // @ts-expect-error
+            onClick={() => dialogRef.current?.showModal()}>
+              join room
+          </button> :
+          <button
+              ref={joinRef}
+              className='btn btn-secondary'
+              // @ts-expect-error
+              onClick={() => dialogRef.current?.showModal()}
+              disabled={true}>
+                join room
+          </button>
+      }
       <dialog ref={dialogRef} id='joinModal' className='modal'>
         <div className='modal-box'>
           <h3 className="font-bold text-lg py-4">Enter your name</h3>

@@ -14,7 +14,7 @@ function GameRoomsTable({ gameRooms }:GameState[]) {
         </tr>
       </thead>
       <tbody>
-        {gameRooms?.map((gameState: GameState) => 
+        {gameRooms.map((gameState: GameState) => 
         <tr key={gameState.roomId}> 
           <td>{gameState.roomName}</td>
           <td>{gameState.playerA}</td>

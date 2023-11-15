@@ -4,24 +4,16 @@ import GameStage from '@/app/components/GameStage';
 import { useParams } from 'next/navigation';
 import { useQuery } from 'react-query';
 import { GameState } from '@/app/types';
-import StartGameButton from '@/app/components/StartGameButton';
-
-// needed?
-interface pageProps {
-  params: { 
-    roomId: string,
-    playerName: string
-  }
-}
+import StartGameScreen from '@/app/components/StartGameScreen';
 
 /*-------------------------------------------------------------------------------------------*/ 
 function GameRoom() {
   const params = useParams()
-  const startGameRef = useRef(null)
+  const [refetchInterval, setRefetchInterval] = useState(200)
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
   fetch(`http://localhost:5000/gameStates/${params.roomId}`).then(res =>
-    res.json()), {refetchInterval:200}
+    res.json()), {refetchInterval, onError:() => setRefetchInterval(0)}
     )
   
   if (gameStateQuery.isLoading) {
@@ -39,7 +31,7 @@ function GameRoom() {
   if (gameStateQuery.data.gameStarted === false) {
     return (
     <div>
-      <StartGameButton roomId={gameStateQuery.data?.roomId}/>
+      <StartGameScreen roomId={gameStateQuery.data.roomId}/>
     </div>
     )
   }
