@@ -24,17 +24,21 @@ function GameRoom() {
     return <div>ERROR</div>
   }
 
-  if (!gameStateQuery.data) {
-    return <div>MISSING DATA</div>
+  if (!gameStateQuery.data || gameStateQuery.data.gameStarted === false) {
+    return (
+      <div>
+        <StartGameScreen roomId={params.roomId}/>
+      </div>
+      )
   }
 
-  if (gameStateQuery.data.gameStarted === false) {
-    return (
-    <div>
-      <StartGameScreen roomId={gameStateQuery.data.roomId}/>
-    </div>
-    )
-  }
+  // if (gameStateQuery.data.gameStarted === false) {
+  //   return (
+  //   <div>
+  //     <StartGameScreen roomId={gameStateQuery.data.roomId}/>
+  //   </div>
+  //   )
+  // }
 
   return (
     <>
