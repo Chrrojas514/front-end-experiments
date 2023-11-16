@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useQuery } from 'react-query'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { GameState } from '../types'
 
 function JoinRoomButton({roomId}: GameState) {
@@ -46,6 +46,10 @@ function JoinRoomButton({roomId}: GameState) {
   }
 
   const handleClick = async (roomId:string, playerName:string) => {
+    if (!playerName) {
+      return
+    }
+
     await updateWithPlayerName(roomId)
     router.push(`/gameRooms/play/${roomId}/${playerName}`, )
     //setPlayerName("")

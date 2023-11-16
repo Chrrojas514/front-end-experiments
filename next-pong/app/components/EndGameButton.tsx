@@ -20,10 +20,6 @@ function EndGameButton({roomId}:string) {
     })
   }
 
-  const handleClick = async () => {
-    await sendEndRequest()
-  }
-
   return (
     <button 
       className='btn btn-secondary'

@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import GameStage from '@/app/components/GameStage';
 import { useParams } from 'next/navigation';
 import { useQuery } from 'react-query';
@@ -8,7 +8,7 @@ import StartGameScreen from '@/app/components/StartGameScreen';
 import EndGameButton from '@/app/components/EndGameButton';
 import DeleteRoomButton from '@/app/components/DeleteRoomButton';
 
-/*-------------------------------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------------------------------*/
 function GameRoom() {
   const params = useParams()
   const [refetchInterval, setRefetchInterval] = useState(200)
@@ -28,11 +28,28 @@ function GameRoom() {
 
   if (!gameStateQuery.data || gameStateQuery.data.gameStarted === false) {
     return (
-      <div>
-        <StartGameScreen roomId={params.roomId} />
-        <DeleteRoomButton roomId={params.roomId} />
-      </div>
-      )
+      <>
+        <table className='table table-bordered table-fixed border-spacing-4'>
+          <thead>
+            <tr>
+              <th>Player A</th>
+              <th>Player B</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>{gameStateQuery.data?.playerA}</th>
+              <th>{gameStateQuery.data?.playerB}</th>
+            </tr>
+          </tbody>
+        </table>
+
+        <div className='flex items-center justify-center py-16'>
+          <StartGameScreen roomId={params.roomId} />
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <DeleteRoomButton roomId={params.roomId} />
+        </div>
+      </> )
   }
 
   return (
@@ -43,6 +60,6 @@ function GameRoom() {
     </>
   )
 }
-/*-------------------------------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------------------------------*/
 
 export default GameRoom
