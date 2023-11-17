@@ -25,7 +25,7 @@ function RoomCreationForm() {
     })
   }
 
-  const handleClick = async (roomName:string) => {
+  const handleSubmit = async (roomName:string) => {
     if (!roomName) {
       return
     }
@@ -36,12 +36,15 @@ function RoomCreationForm() {
   
   return (
     <div className='join'>
+      <form onSubmit={() => handleSubmit(roomName)}>
       <input
+        required
         className='input input-bordered join-item'
         placeholder='Create a room'
         value={roomName}
         onInput={e => setRoomName(e.currentTarget.value)} />
-      <button className='btn btn-primary' onClick={async () => { await handleClick(roomName)} }>create room</button>
+      <button className='btn btn-primary'>create room</button>
+      </form>
     </div>
   )
 }

@@ -26,6 +26,7 @@ function GameRoom() {
     return <div>ERROR</div>
   }
 
+  // not a good if statement, should handle !gameStateQuery.data 
   if (!gameStateQuery.data || gameStateQuery.data.gameStarted === false) {
     return (
       <>
@@ -55,6 +56,10 @@ function GameRoom() {
   return (
     <>
       <div>current room id: {params.roomId} current player: {params.playerName}</div>
+      <div className='flex space-x-36'>
+        <div> Player {gameStateQuery.data.playerA} score: {gameStateQuery.data.playerAScore} </div>
+        <div> Player {gameStateQuery.data.playerB} score: {gameStateQuery.data.playerBScore} </div>
+      </div>
       <GameStage roomId={params.roomId} playerName={params.playerName} />
       <EndGameButton roomId={params.roomId} />
     </>

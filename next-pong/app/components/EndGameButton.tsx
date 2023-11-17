@@ -22,7 +22,7 @@ function EndGameButton({roomId}:string) {
 
   return (
     <button 
-      className='btn btn-secondary'
+      className='btn btn-secondary space-y-6'
       onClick={() => sendEndRequest()}>
         End Game
     </button>
