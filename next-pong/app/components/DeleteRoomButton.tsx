@@ -12,8 +12,8 @@ function DeleteRoomButton({roomId}:string) {
   }
 
   const handleClick = async () => {
-    router.push('/gameRooms')
     await sendDeleteRequest()
+    router.push('/gameRooms')
   }
 
   return (

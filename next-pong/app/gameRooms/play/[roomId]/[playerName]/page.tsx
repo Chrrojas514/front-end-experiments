@@ -28,8 +28,10 @@ function GameRoom() {
 
   // not a good if statement, should handle !gameStateQuery.data 
   if (!gameStateQuery.data || gameStateQuery.data.gameStarted === false) {
+    
     return (
       <>
+        {/* wrap in div, add as separate component and center it horizontally?  */}
         <table className='table table-bordered table-fixed border-spacing-4'>
           <thead>
             <tr>

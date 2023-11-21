@@ -5,8 +5,8 @@ import { UpdatePaddleRequest, DEFAULT_UPDATE_REQUEST, GameState } from '../types
 
 const BASE_PADDLE_STYLES: CSSProperties = {width: '12px', height: '120px', backgroundColor: 'white'}
 
-const MIN_PADDLE_POSITION = -3
-const MAX_PADDLE_POSITION = 33
+const MIN_PADDLE_POSITION = -8
+const MAX_PADDLE_POSITION = 88
 
 interface GameStateProps {
   roomId: string,
@@ -97,19 +97,17 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
         width: '600px',
         height: '500px'
       }}>
-      <div id='user_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[playerKey] * 10}}></div>
+      <div id='user_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[playerKey] * 3.75}}></div>
       <div id='stage_divider' style={{ border: '2px dashed white'}}></div>
       <div id='ball' style={{
         position: 'absolute',
         width: '15px',
         height: '15px',
         backgroundColor: 'white',
-        top: gameStateQuery.data.ballPositionX,
-        left: gameStateQuery.data.ballPositionY,
+        top: gameStateQuery.data.ballPositionY + "%",
+        left: gameStateQuery.data.ballPositionX + "%",
       }}></div>
-      <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[opponent] * 10}}></div>
+      <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[opponent] * 3.75}}></div>
     </div>
   )
 }
-
-// position values for keeping ball in center of stage: top 225, left 291
