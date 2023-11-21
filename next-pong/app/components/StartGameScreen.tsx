@@ -42,7 +42,7 @@ function StartGameButton(roomId:string) {
       <button
         className='btn btn-secondary'
         onClick={() => {handleClick()}}>
-          Start Game Button
+          Start Game
       </button>
     </>
   )
