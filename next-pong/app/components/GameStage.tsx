@@ -3,10 +3,10 @@ import { CSSProperties, useCallback, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { UpdatePaddleRequest, DEFAULT_UPDATE_REQUEST, GameState } from '../types'
 
-const BASE_PADDLE_STYLES: CSSProperties = {width: '12px', height: '120px', backgroundColor: 'white'}
+const BASE_PADDLE_STYLES: CSSProperties = {width: '2%', height: '50%', backgroundColor: 'white', position: 'absolute'}
 
-const MIN_PADDLE_POSITION = -8
-const MAX_PADDLE_POSITION = 88
+const MIN_PADDLE_POSITION = 0
+const MAX_PADDLE_POSITION = 76
 
 interface GameStateProps {
   roomId: string,
@@ -91,13 +91,12 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
       style={{
         position: 'relative',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         border: '1px solid white',
-        padding: '40px',
         width: '600px',
         height: '500px'
       }}>
-      <div id='user_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[playerKey] * 3.75}}></div>
+      <div id='user_paddle' style={{...BASE_PADDLE_STYLES, top: gameStateQuery.data[playerKey] + "%", left: '40px'}}></div>
       <div id='stage_divider' style={{ border: '2px dashed white'}}></div>
       <div id='ball' style={{
         position: 'absolute',
@@ -107,7 +106,7 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
         top: gameStateQuery.data.ballPositionY + "%",
         left: gameStateQuery.data.ballPositionX + "%",
       }}></div>
-      <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, marginTop: gameStateQuery.data[opponent] * 3.75}}></div>
+      <div id='other_player_paddle' style={{...BASE_PADDLE_STYLES, top: gameStateQuery.data[opponent] + "%", right: '40px'}}></div>
     </div>
   )
 }

@@ -6,12 +6,11 @@ import { GameState } from '../types'
 
 function JoinRoomButton({roomId}: GameState) {
   const [playerName, setPlayerName] = useState<string>('')
-  const [isFull, setIsFull] = useState<boolean>(false)
   const dialogRef = useRef(null)
   const joinRef = useRef(null)
   const router = useRouter()
   
-  const gameStateQuery = useQuery<GameState>('gameState', () =>
+  const gameStateQuery = useQuery<GameState>(['gameState', roomId], () =>
     fetch(`http://localhost:5000/gameStates/${roomId}`).then(res => res.json())
     )
 
@@ -27,6 +26,14 @@ function JoinRoomButton({roomId}: GameState) {
     return <td>MISSING DATA</td>
   }
 
+  const isFull = (!!gameStateQuery.data.playerA && !!gameStateQuery.data.playerB);
+
+  console.log(roomId)
+  // console.log(gameStateQuery.data.roomName)
+  // console.log(gameStateQuery.data.playerA)
+  // console.log(gameStateQuery.data.playerB)
+  // console.log(isFull)
+
   const updateWithPlayerName = async (roomId:string) => {
     const playerNameRequest = {
       roomId: roomId,
@@ -41,8 +48,6 @@ function JoinRoomButton({roomId}: GameState) {
       },
       body: JSON.stringify(playerNameRequest)
     })
-
-    roomIsFull()
   }
 
   const handleClick = async (roomId:string, playerName:string) => {
@@ -55,27 +60,6 @@ function JoinRoomButton({roomId}: GameState) {
     //setPlayerName("")
   }
 
-  const roomIsFull = () => {
-    if (gameStateQuery.data.playerA === ("") || gameStateQuery.data.playerB === ("")) {
-      setIsFull(false)
-    }
-    setIsFull(true)
-  }
-
-  if (isFull) {
-    return <td>
-      <button
-          ref={joinRef}
-          className='btn btn-secondary'
-          // @ts-expect-error
-          onClick={() => dialogRef.current?.showModal()}
-          disabled={true}>
-            join room
-        </button>
-    </td>
-  }
-
-
   return (
     <td>
       {/*  */}
@@ -86,23 +70,14 @@ function JoinRoomButton({roomId}: GameState) {
       disabled={isFull}>
         join room
       </button> */}
-      {!isFull
-        ? <button
-            ref={joinRef}
-            className='btn btn-secondary'
-            // @ts-expect-error
-            onClick={() => dialogRef.current?.showModal()}>
-              join room
-          </button> :
-          <button
-              ref={joinRef}
-              className='btn btn-secondary'
-              // @ts-expect-error
-              onClick={() => dialogRef.current?.showModal()}
-              disabled={true}>
-                join room
-          </button>
-      }
+      <button
+        ref={joinRef}
+        className='btn btn-secondary'
+        disabled={isFull}
+        // @ts-expect-error
+        onClick={() => dialogRef.current?.showModal()}>
+          join room
+      </button>
       <dialog ref={dialogRef} id='joinModal' className='modal'>
         <div className='modal-box'>
           <h3 className="font-bold text-lg py-4">Enter your name</h3>
@@ -116,7 +91,7 @@ function JoinRoomButton({roomId}: GameState) {
                />
             <button
               className="btn btn-secondary join-item"
-              onClick={async () => {handleClick(roomId, playerName)}}>
+              onClick={() => {handleClick(roomId, playerName)}}>
                 submit
             </button>
           </form>
