@@ -2,7 +2,11 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { GameState } from '../types'
 
-function EndGameButton({roomId}:string) {
+interface Props {
+  roomId: string | string[]
+}
+
+function EndGameButton({roomId}:Props) {
   const sendEndRequest = async () => {
     const request = { roomId }
 

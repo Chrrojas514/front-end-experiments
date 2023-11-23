@@ -4,7 +4,11 @@ import { useQuery } from 'react-query'
 import React, { useRef, useState } from 'react'
 import { GameState } from '../types'
 
-function JoinRoomButton({roomId}: GameState) {
+interface Props {
+  roomId: string
+}
+
+function JoinRoomButton({roomId}: Props) {
   const [playerName, setPlayerName] = useState<string>('')
   const dialogRef = useRef(null)
   const joinRef = useRef(null)

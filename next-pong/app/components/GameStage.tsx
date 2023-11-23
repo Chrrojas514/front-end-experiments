@@ -9,8 +9,8 @@ const MIN_PADDLE_POSITION = 0
 const MAX_PADDLE_POSITION = 76
 
 interface GameStateProps {
-  roomId: string,
-  playerName: string,
+  roomId: string | string[],
+  playerName: string | string[] ,
 }
 
 export default function GameStage({roomId, playerName}: GameStateProps) {

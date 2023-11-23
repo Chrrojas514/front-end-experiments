@@ -3,7 +3,11 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { GameState } from '../types'
 
-function StartGameButton(roomId:string) {
+interface Props {
+  roomId: string
+}
+
+function StartGameButton(roomId:Props) {
   const gameStateQuery = useQuery<GameState>('gameState', () =>
   fetch(`http://localhost:5000/gameStates/${roomId}`).then(res =>
     res.json())
@@ -21,7 +25,7 @@ function StartGameButton(roomId:string) {
     )
   }
 
-  const startGame = async (roomId:string) => {
+  const startGame = async (roomId:Props) => {
     const response = await fetch(`http://localhost:5000/startGame`, {
       method: 'POST',
       headers: {

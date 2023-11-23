@@ -33,8 +33,8 @@ export const DEFAULT_GAME_STATE: GameState = {
   }
 
 export type UpdatePaddleRequest = {
-    roomId: string,
-    playerName: string,
+    roomId: string | string[],
+    playerName: string | string[],
     paddlePosition: number
   }
   

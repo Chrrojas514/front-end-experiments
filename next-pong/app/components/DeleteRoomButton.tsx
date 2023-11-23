@@ -1,7 +1,12 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { GameState } from '../types'
 
-function DeleteRoomButton({roomId}:string) {
+interface Props {
+  roomId: string
+}
+
+function DeleteRoomButton({roomId}:Props) {
   const router = useRouter()
   
   const sendDeleteRequest = async () => {
