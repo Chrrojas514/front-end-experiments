@@ -37,12 +37,12 @@ function RoomCreationForm() {
   return (
     <div className='join'>
       <form onSubmit={() => handleSubmit(roomName)}>
-      <input
-        required
-        className='input input-bordered join-item'
-        placeholder='Create a room'
-        value={roomName}
-        onInput={e => setRoomName(e.currentTarget.value)} />
+        <input
+          required
+          className='input input-bordered join-item'
+          placeholder='Create a room'
+          value={roomName}
+          onInput={e => setRoomName(e.currentTarget.value)} />
       <button className='btn btn-primary'>create room</button>
       </form>
     </div>

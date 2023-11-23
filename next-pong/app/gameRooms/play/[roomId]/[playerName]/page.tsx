@@ -26,6 +26,8 @@ function GameRoom() {
     return <div>ERROR</div>
   }
 
+  const roomId = Array.isArray(params.roomId) ? params.roomId[0] : params.roomId
+
   // not a good if statement, should handle !gameStateQuery.data 
   if (!gameStateQuery.data || gameStateQuery.data.gameStarted === false) {
     
@@ -48,9 +50,9 @@ function GameRoom() {
         </table>
 
         <div className='flex items-center justify-center py-16'>
-          <StartGameScreen roomId={params.roomId} />
+          <StartGameScreen roomId={roomId} />
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <DeleteRoomButton roomId={params.roomId} />
+          <DeleteRoomButton roomId={roomId} />
         </div>
       </> )
   }

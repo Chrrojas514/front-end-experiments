@@ -2,7 +2,11 @@ import React from 'react'
 import JoinRoomButton from './JoinRoomButton'
 import { GameState } from '../types';
 
-function GameRoomsTable({ gameRooms }:GameState[]) {
+interface Props {
+  gameRooms: GameState[]
+}
+
+function GameRoomsTable({ gameRooms }:Props) {
 
   return <>
     <table className='table table-bordered'>
