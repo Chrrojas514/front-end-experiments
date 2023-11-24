@@ -50,22 +50,3 @@ function RoomCreationForm() {
 }
 
 export default RoomCreationForm
-
-
-// SAMPLE GAMESTATE JSON OBJECTS
-// {
-// 	"roomName": "generating",
-// 	"playerA": "",
-// 	"playerB": "",
-// 	"playerAPaddlePosition": 0,
-// 	"playerBPaddlePosition": 0,
-// 	"playerAScore": 0,
-// 	"playerBScore": 0,
-// 	"ballPositionX": 20,
-// 	"ballPositionY": 20,
-// 	"ballVelocityX": 2,
-// 	"ballVelocityY": 2,
-// 	"gameStarted": false,
-// 	"gameOver": false,
-// 	"roomId": "5670b0ab39b64"
-// }
