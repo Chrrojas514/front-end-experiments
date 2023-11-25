@@ -3,7 +3,7 @@ import { CSSProperties, useCallback, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { UpdatePaddleRequest, DEFAULT_UPDATE_REQUEST, GameState } from '../types'
 
-const BASE_PADDLE_STYLES: CSSProperties = {width: '2%', height: '50%', backgroundColor: 'white', position: 'absolute'}
+const BASE_PADDLE_STYLES: CSSProperties = {width: '2%', height: '24%', backgroundColor: 'white', position: 'absolute'}
 
 const MIN_PADDLE_POSITION = 0
 const MAX_PADDLE_POSITION = 76
