@@ -6,6 +6,23 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model GameState {
+  roomId                String  @id @default(uuid())
+  roomName              String  @db.VarChar(255)
+  playerA               String  @db.VarChar(20)
+  playerB               String  @db.VarChar(20)
+  playerAPaddlePosition Int
+  playerBPaddlePosition Int
+  playerAScore          Int
+  playerBScore          Int
+  ballPositionX         Int
+  ballPositionY         Int
+  ballVelocityX         Int
+  ballVelocityY         Int
+  gameStarted           Boolean
+  gameOver              Boolean
 }
