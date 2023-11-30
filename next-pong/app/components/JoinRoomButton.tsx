@@ -32,12 +32,6 @@ function JoinRoomButton({roomId}: Props) {
 
   const isFull = (!!gameStateQuery.data.playerA && !!gameStateQuery.data.playerB);
 
-  console.log(roomId)
-  // console.log(gameStateQuery.data.roomName)
-  // console.log(gameStateQuery.data.playerA)
-  // console.log(gameStateQuery.data.playerB)
-  // console.log(isFull)
-
   const updateWithPlayerName = async (roomId:string) => {
     const playerNameRequest = {
       roomId: roomId,
@@ -61,19 +55,10 @@ function JoinRoomButton({roomId}: Props) {
 
     await updateWithPlayerName(roomId)
     router.push(`/gameRooms/play/${roomId}/${playerName}`, )
-    //setPlayerName("")
   }
 
   return (
     <td>
-      {/*  */}
-      {/* <button
-      className='btn btn-secondary'
-      // @ts-expect-error
-      onClick={() => dialogRef.current?.showModal()}
-      disabled={isFull}>
-        join room
-      </button> */}
       <button
         ref={joinRef}
         className='btn btn-secondary'

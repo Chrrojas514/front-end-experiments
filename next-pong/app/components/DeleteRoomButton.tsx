@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { GameState } from '../types'
 
 interface Props {
   roomId: string

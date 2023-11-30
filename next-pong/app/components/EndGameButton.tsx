@@ -1,6 +1,4 @@
 import React from 'react'
-import { useQuery } from 'react-query'
-import { GameState } from '../types'
 
 interface Props {
   roomId: string | string[]
