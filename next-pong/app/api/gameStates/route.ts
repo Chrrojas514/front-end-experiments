@@ -31,23 +31,15 @@ export async function POST(request: NextRequest) {
 
   const newGameState = await prisma.gameState.create({
     data: {
-      roomName: body.roomName,
-      playerA: body.playerA,
-      playerB: body.playerB,
-      playerAPaddlePosition: body.playerAPaddlePosition,
-      playerBPaddlePosition: body.playerBPaddlePosition,
-      playerAScore: body.playerAScore,
-      playerBScore: body.playerBScore,
-      ballPositionX: body.ballPositionX,
-      ballPositionY: body.ballPositionY,
-      ballVelocityX: body.ballVelocityX,
-      ballVelocityY: body.ballVelocityY,
-      gameStarted: body.gameStarted,
-      gameOver: body.gameOver
+      ...body
     }
   })
 
-  // console.log(newGameState)
-
   return NextResponse.json(newGameState, { status: 201 } )
+}
+
+export async function GET() {
+  const gameStates = await prisma.gameState.findMany()
+
+  return NextResponse.json(gameStates, { status: 201 } )
 }
