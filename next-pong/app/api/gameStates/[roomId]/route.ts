@@ -69,4 +69,12 @@ export async function DELETE(request: Request, { params }: { params: { roomId: s
   if (!target) {
     return NextResponse.json('Room not found', {status: 404})
   }
+
+  await prisma.gameState.delete({
+    where: {
+      roomId: room,
+    }
+  })
+
+  return NextResponse.json('Room deleted', {status: 202})
 }
