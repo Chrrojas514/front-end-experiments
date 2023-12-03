@@ -20,12 +20,12 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
   const newPaddle = paddle
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
-  fetch(`http://localhost:5000/gameStates/${roomId}`).then(res =>
+  fetch(`http://localhost:3000/api/gameStates/${roomId}`).then(res =>
     res.json()), {refetchInterval:100}
     )
 
   const sendUpdateRequest = useCallback (async (paddleReq:UpdatePaddleRequest) => {
-    await fetch(`http://localhost:5000/gameStates/${roomId}`, {
+    await fetch(`http://localhost:3000/api/gameStates/${roomId}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
