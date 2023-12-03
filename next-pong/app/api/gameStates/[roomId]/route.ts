@@ -54,7 +54,7 @@ export async function PUT(request: any, { params }: { params: { roomId: string }
     return NextResponse.json(result, {status: 200})
   }
 
-  return NextResponse.json('Player with given name not found', {status: 200});
+  return NextResponse.json('Player with given name not found', {status: 200})
 }
 
 export async function DELETE(request: Request, { params }: { params: { roomId: string } }) {

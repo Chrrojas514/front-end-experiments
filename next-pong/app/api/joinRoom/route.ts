@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     where: {
       roomId: data.roomId
     }
-  });
+  })
 
   if (!target) {
     return NextResponse.json('Room not found', {status: 404})
@@ -23,9 +23,9 @@ export async function POST(request: Request) {
       data: {
         playerA: data.playerName
       }
-    });
+    })
 
-    return NextResponse.json(updatedTarget, {status: 201});
+    return NextResponse.json(updatedTarget, {status: 201})
   }
 
   if (!target.playerB) {
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       }
     });
 
-    return NextResponse.json(updatedTarget, {status: 201});
+    return NextResponse.json(updatedTarget, {status: 201})
   }
 
   return NextResponse.json('Room is full', {status: 400})
