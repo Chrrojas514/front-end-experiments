@@ -7,7 +7,7 @@ import { GameState } from '../types'
 
 const GameRoomPage = () => {
   const gameStatesQuery = useQuery<GameState[]>('gameStates', () =>
-    fetch('http://localhost:5000/gameStates').then(res =>
+    fetch('http://localhost:3000/api/gameStates').then(res =>
       res.json()
     )
   )

@@ -11,7 +11,7 @@ function RoomCreationForm() {
     let newGameRoom: GameState = DEFAULT_GAME_STATE
     newGameRoom.roomName = roomName
     
-    await fetch('http://localhost:5000/createRoom', {
+    await fetch('http://localhost:3000/api/gameStates', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

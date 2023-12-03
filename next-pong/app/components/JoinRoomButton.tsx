@@ -15,7 +15,7 @@ function JoinRoomButton({roomId}: Props) {
   const router = useRouter()
   
   const gameStateQuery = useQuery<GameState>(['gameState', roomId], () =>
-    fetch(`http://localhost:5000/gameStates/${roomId}`).then(res => res.json())
+    fetch(`http://localhost:3000/api/gameStates/${roomId}`).then(res => res.json())
     )
 
   if (gameStateQuery.isLoading) {
@@ -38,7 +38,7 @@ function JoinRoomButton({roomId}: Props) {
       playerName: playerName
     }
 
-    await fetch('http://localhost:5000/joinRoom', {
+    await fetch('http://localhost:3000/api/joinRoom', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
