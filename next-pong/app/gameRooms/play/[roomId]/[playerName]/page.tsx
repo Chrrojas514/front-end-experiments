@@ -14,7 +14,7 @@ function GameRoom() {
   const [refetchInterval, setRefetchInterval] = useState(200)
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
-  fetch(`http://localhost:5000/gameStates/${params.roomId}`).then(res =>
+  fetch(`http://localhost:3000/api/gameStates/${params.roomId}`).then(res =>
     res.json()), {refetchInterval, onError:() => setRefetchInterval(0)}
     )
   
