@@ -4,8 +4,8 @@ import prisma from "@/prisma/client"
 
 const createGameStateSchema = z.object({
   roomName: z.string().min(1).max(30),
-  playerA: z.string().min(1),
-  playerB: z.string().min(1),
+  playerA: z.string().min(0),
+  playerB: z.string().min(0),
   playerAPaddlePosition: z.number(),
   playerBPaddlePosition: z.number(),
   playerAScore: z.number(),
@@ -41,5 +41,5 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   const gameStates = await prisma.gameState.findMany()
 
-  return NextResponse.json(gameStates, { status: 201 } )
+  return NextResponse.json(gameStates, { status: 200 } )
 }
