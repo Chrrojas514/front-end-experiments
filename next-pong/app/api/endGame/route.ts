@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import prisma from "@/prisma/client"
+import { intervalKeys } from "../intervalMap"
 
 //STILL NEED TO END INTERVAL HERE SOMEHOW?
 
@@ -15,6 +16,8 @@ export async function POST(request: Request) {
   if (!target) {
     return NextResponse.json('Room not found', {status: 404})
   }
+
+  // clearInterval(intervalKeys[data.roomId])
 
   const updatedTarget = await prisma.gameState.update({
     where: {

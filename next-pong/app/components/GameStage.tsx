@@ -20,12 +20,12 @@ export default function GameStage({roomId, playerName}: GameStateProps) {
   const newPaddle = paddle
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
-  fetch(`http://localhost:3000/api/gameStates/${roomId}`).then(res =>
+  fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates/${roomId}`).then(res =>
     res.json()), {refetchInterval:100}
     )
 
   const sendUpdateRequest = useCallback (async (paddleReq:UpdatePaddleRequest) => {
-    await fetch(`http://localhost:3000/api/gameStates/${roomId}`, {
+    await fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates/${roomId}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

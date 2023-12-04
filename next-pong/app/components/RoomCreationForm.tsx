@@ -11,7 +11,7 @@ function RoomCreationForm() {
     let newGameRoom: GameState = DEFAULT_GAME_STATE
     newGameRoom.roomName = roomName
     
-    await fetch('http://localhost:3000/api/gameStates', {
+    await fetch('https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

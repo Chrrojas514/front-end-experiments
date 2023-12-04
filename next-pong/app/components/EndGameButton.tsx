@@ -8,7 +8,7 @@ function EndGameButton({roomId}:Props) {
   const sendEndRequest = async () => {
     const request = { roomId }
 
-    await fetch(`http://localhost:5000/endGame`, {
+    await fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/endGame`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

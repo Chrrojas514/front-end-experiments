@@ -9,7 +9,7 @@ interface Props {
 
 function StartGameButton(roomId:Props) {
   const gameStateQuery = useQuery<GameState>('gameState', () =>
-  fetch(`http://localhost:3000/api/gameStates/${roomId}`).then(res =>
+  fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates/${roomId}`).then(res =>
     res.json())
     )
 
@@ -26,7 +26,7 @@ function StartGameButton(roomId:Props) {
   }
 
   const startGame = async (roomId:Props) => {
-    const response = await fetch(`http://localhost:3000/api/startGame`, {
+    const response = await fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/startGame`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

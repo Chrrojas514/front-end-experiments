@@ -15,7 +15,7 @@ function JoinRoomButton({roomId}: Props) {
   const router = useRouter()
   
   const gameStateQuery = useQuery<GameState>(['gameState', roomId], () =>
-    fetch(`http://localhost:3000/api/gameStates/${roomId}`).then(res => res.json())
+    fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates/${roomId}`).then(res => res.json())
     )
 
   if (gameStateQuery.isLoading) {
@@ -38,7 +38,7 @@ function JoinRoomButton({roomId}: Props) {
       playerName: playerName
     }
 
-    await fetch('http://localhost:3000/api/joinRoom', {
+    await fetch('https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/joinRoom', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

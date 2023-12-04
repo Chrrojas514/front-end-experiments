@@ -7,7 +7,7 @@ import { GameState } from '../types'
 
 const GameRoomPage = () => {
   const gameStatesQuery = useQuery<GameState[]>('gameStates', () =>
-    fetch('http://localhost:3000/api/gameStates').then(res =>
+    fetch('https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates').then(res =>
       res.json()
     )
   )
