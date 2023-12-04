@@ -17,8 +17,6 @@ export async function POST(request: Request) {
     return NextResponse.json('Room not found', {status: 404})
   }
 
-  // clearInterval(intervalKeys[data.roomId])
-
   const updatedTarget = await prisma.gameState.update({
     where: {
       roomId: data.roomId,
