@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       data: {
         playerB: data.playerName
       }
-    });
+    })
 
     return NextResponse.json(updatedTarget, {status: 201})
   }

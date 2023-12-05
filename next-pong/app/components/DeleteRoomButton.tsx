@@ -9,7 +9,7 @@ function DeleteRoomButton({roomId}:Props) {
   const router = useRouter()
   
   const sendDeleteRequest = async () => {
-    const response = await fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates/${roomId}`, {
+    const response = await fetch(`/api/gameStates/${roomId}`, {
       method: 'DELETE'
     })
     console.log(response.json())

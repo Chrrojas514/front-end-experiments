@@ -14,7 +14,7 @@ function GameRoom() {
   const [refetchInterval, setRefetchInterval] = useState(200)
 
   const gameStateQuery = useQuery<GameState>('gameState', () =>
-  fetch(`https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates/${params.roomId}`).then(res =>
+  fetch(`/api/gameStates/${params.roomId}`).then(res =>
     res.json()), {refetchInterval, onError:() => setRefetchInterval(0)}
     )
   
