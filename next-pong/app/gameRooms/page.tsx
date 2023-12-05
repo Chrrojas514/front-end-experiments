@@ -7,7 +7,13 @@ import { GameState } from '../types'
 
 const GameRoomPage = () => {
   const gameStatesQuery = useQuery<GameState[]>('gameStates', () =>
-    fetch('https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates').then(res =>
+    fetch('https://pong-lrohlxvjt-chris-projects-10429c46.vercel.app/api/gameStates',
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': "application/json",
+      }
+    }).then(res =>
       res.json()
     )
   )
